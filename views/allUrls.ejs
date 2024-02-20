@@ -1,0 +1,13 @@
+<html>
+    <head>
+    <title>URLs</title>
+        </head>
+            <body>
+                <h1>URLs</h1>
+                <ul>
+                    <% urls.forEach(url => { %>
+                    <li><a href="<%= url.redirectUrl %>"><%= url.redirectUrl %> -  <%= url.shortId %> - <%= url.visitHistory.length %></a></li>
+                    <% }) %>
+                </ul>
+            </body>
+    </html>

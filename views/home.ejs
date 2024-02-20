@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortify - URL Shortener</title>
+    <link rel="stylesheet" src="./home.css">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        /* styles.css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+        }
+
+        .hero h2 {
+            margin-bottom: 20px;
+        }
+
+        .hero input[type="url"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .hero button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Shortify</h1>
+        <p>A Simple URL Shortener</p>
+    </header>
+    <main>
+        <section class="hero">
+            <h2>Shorten Your Long URLs</h2>
+            <% if (locals.id) { %>
+                <p>Shortened URL: <a href="http://localhost:3001/url/getShortUrl/<%= local.id %>">
+                        <%= local.id %>
+                    </a></p>
+                <% } %>
+                    <form action="/url/generate" method="POST">
+                        <input type="url" name="url" id="original-url" placeholder="https://example.com" required>
+                        <button type="submit">Shorten</button>
+                    </form>
+        </section>
+        <section class="features">
+            <h2>Why Shortify?</h2>
+            <div class="feature">
+                <box-icon name='link-alt'></box-icon>
+                <h3>Shorten Any URL</h3>
+                <p>Whether it's a long blog post or a complex URL, Shortify can shorten it for you.</p>
+            </div>
+            <div class="feature">
+                <box-icon name='stats'></box-icon>
+                <h3>Track Performance</h3>
+                <p>Get insights into how many times your shortened links have been clicked.</p>
+            </div>
+            <div class="feature">
+                <box-icon name='lock-alt' type='solid'></box-icon>
+                <h3>Secure</h3>
+                <p>Your data is safe with us. We use the latest encryption techniques to protect your links.</p>
+            </div>
+        </section>
+        <section>
+            <h2>All Url's</h2>
+            <% if (locals.urls) { %>
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">S.no</th>
+                            <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Short Id</th>
+                            <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Redirect</th>
+                            <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url, index)=> { %>
+                            <tr style="background-color: #ffffff;">
+                                <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+                                    <%= index + 1 %>
+                                </td>
+                                <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+                                    <%= url.shortId %>
+                                </td>
+                                <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+                                    <a target="_blank" href="http://localhost:3001/url/getShortUrl/<%= url.shortId %>"
+                                        style="text-decoration: none; color: #333333;">
+                                        <%= url.redirectUrl %>
+                                    </a>
+                                </td>
+                                <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+                                    <%= url.visitHistory.length %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <% } %>
+
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Shortify. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
