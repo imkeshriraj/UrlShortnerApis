@@ -4,6 +4,7 @@ const URL = require("../models/url")
 async function handleGenerateShortUrl(req, res) {
     try {
         const body = req.body;
+        console.log(req.body,"*******BODY*******");
         if (!body.url) {
             return res.status(400).json({ message: "url is required" })
         }
