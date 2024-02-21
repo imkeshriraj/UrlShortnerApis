@@ -9,6 +9,9 @@ To run this application locally, follow these steps:
 1. Create a MongoDB database named `url-shortener`.
 2. Inside the `url-shortener` database, create a collection named `urls`.
 3. Create a `.env` file in the root directory of the project with the following content:
+4. move into root directory and then
+   ```bash
+     npm run dev
 
 
 
