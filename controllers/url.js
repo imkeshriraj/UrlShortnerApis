@@ -28,24 +28,37 @@ async function handleGetAnalytics(req, res) {
 
 }
 async function handleGetShortUrl(req, res) {
-    const id = req.params.id;
-    const entry = await URL.findOneAndUpdate(
-        {
-            shortId: id
-        },
-        {
-            $push: {
-                visitHistory: {
-                    timestamp: Date.now(),
-
-                },
+    try {
+        const id = req.params.id;
+        const entry = await URL.findOneAndUpdate(
+            {
+                shortId: id
             },
+            {
+                $push: {
+                    visitHistory: {
+                        timestamp: Date.now(),
 
+                    },
+                },
+
+            }
+        );
+
+        if (!entry) {
+            // If no entry found with the given shortId
+            return res.status(404).json({ error: 'Short URL not found' });
         }
-    );
-    res.redirect(entry.redirectUrl);
 
+        // Redirect to the original URL
+        res.redirect(entry.redirectUrl);
+    } catch (error) {
+        // Handle errors
+        console.error('Error handling short URL request:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
+
 async function handleGetAllUrls(req, res) {
     try {
         const email = req.body.email;
