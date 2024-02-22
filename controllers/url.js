@@ -4,7 +4,7 @@ const URL = require("../models/url")
 async function handleGenerateShortUrl(req, res) {
     try {
         const body = req.body;
-        console.log(req.body,"*******BODY*******");
+        console.log(req.body, "*******BODY*******");
         if (!body.url) {
             return res.status(400).json({ message: "url is required" })
         }
@@ -44,7 +44,7 @@ async function handleGetShortUrl(req, res) {
 
             }
         );
-
+        console.log(JSON.stringify(entry));
         if (!entry) {
             // If no entry found with the given shortId
             return res.status(404).json({ error: 'Short URL not found' });
